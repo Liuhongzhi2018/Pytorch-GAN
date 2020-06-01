@@ -21,14 +21,16 @@ c = np.array(c)
 
 plt.rcParams['xtick.direction'] = 'in'
 plt.rcParams['ytick.direction'] = 'in'
+plt.rc('font',family='Times New Roman')
+
 for i in range(cnt): 
-    plt.scatter(e[i], c[i], marker = 'o', color = color_map[i], s = 50, label = m[i]) 
+    plt.scatter(e[i], c[i], marker = 'o', color = color_map[i], s = 30, label = m[i]) 
     
 plt.legend(loc = 'best')
 
-plt.xlim((0.2, 1))
+plt.xlim((0, 1))
 plt.ylim((0, 0.4))
-my_x_ticks = np.arange(0.2, 1.1, 0.1)
+my_x_ticks = np.arange(0.1, 1.1, 0.1)
 my_y_ticks = np.arange(0.05,0.4, 0.05) 
 plt.xticks(my_x_ticks) 
 plt.yticks(my_y_ticks)
