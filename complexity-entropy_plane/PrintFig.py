@@ -16,10 +16,11 @@ f.close()
 cnt = len(m)
 # color_map = ['red','yellow','orange','goldenrod','pink','skyblue','cyan','steelblue']
 color_map = ['#FF0000','#FFFF00','#FFA500','#DAA520','#FFC0CB','#87CEEB','#00FFFF','#4682B4']
-
 e = np.array(e)
 c = np.array(c)
 
+plt.rcParams['xtick.direction'] = 'in'
+plt.rcParams['ytick.direction'] = 'in'
 for i in range(cnt): 
     plt.scatter(e[i], c[i], marker = 'o', color = color_map[i], s = 50, label = m[i]) 
     
