@@ -14,8 +14,8 @@ for line in f:
 f.close()
 
 cnt = len(m)
-# color_map = ['red','yellow','orange','goldenrod','pink','skyblue','cyan','steelblue']
-color_map = ['#FF0000','#FFFF00','#FFA500','#DAA520','#FFC0CB','#87CEEB','#00FFFF','#4682B4']
+# color_map = ['red','coral','orange','goldenrod','pink','skyblue','cyan','steelblue']
+color_map = ['#FF0000','#FF7F50','#FFA500','#DAA520','#FFC0CB','#87CEEB','#00FFFF','#4682B4']
 e = np.array(e)
 c = np.array(c)
 
@@ -25,6 +25,13 @@ for i in range(cnt):
     plt.scatter(e[i], c[i], marker = 'o', color = color_map[i], s = 50, label = m[i]) 
     
 plt.legend(loc = 'best')
+
+plt.xlim((0.2, 1))
+plt.ylim((0, 0.4))
+my_x_ticks = np.arange(0.2, 1.1, 0.1)
+my_y_ticks = np.arange(0.05,0.4, 0.05) 
+plt.xticks(my_x_ticks) 
+plt.yticks(my_y_ticks)
 
 plt.xlabel('Entropy,H')
 plt.ylabel('Complexity,C')
