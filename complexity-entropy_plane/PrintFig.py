@@ -36,8 +36,8 @@ my_y_ticks = np.arange(0.05,0.4, 0.05)
 plt.xticks(my_x_ticks) 
 plt.yticks(my_y_ticks)
 
-plt.xlabel('Entropy,H')
-plt.ylabel('Complexity,C')
+plt.xlabel('Entropy, H')
+plt.ylabel('Complexity, C')
 
 plt.savefig('./CEplane.png',dpi = 600)
 plt.show()
