@@ -13,9 +13,10 @@ for line in f:
     e.append(float(entropy))
 f.close()
 
+# color_map = ['red','gold','greenyellow','green','aqua','skyblue','cyan','purple']
+color_map = ['#FF0000','#FFD700','#ADFF2F','#008000','#FF7F50','#00FFFF','#4682B4','#800080']
 cnt = len(m)
-# color_map = ['red','coral','orange','goldenrod','pink','skyblue','cyan','steelblue']
-color_map = ['#FF0000','#FF7F50','#FFA500','#DAA520','#FFC0CB','#87CEEB','#00FFFF','#4682B4']
+
 e = np.array(e)
 c = np.array(c)
 
