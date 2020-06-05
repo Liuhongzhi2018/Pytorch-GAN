@@ -15,6 +15,10 @@ def dataloader(dataset, input_size, batch_size, split='train'):
         data_loader = DataLoader(
             datasets.CIFAR10('data/cifar10', train=True, download=True, transform=transform),
             batch_size=batch_size, shuffle=True)
+    elif dataset == 'cifar100':
+        data_loader = DataLoader(
+            datasets.CIFAR100('data/cifar100', train=True, download=True, transform=transform),
+            batch_size=batch_size, shuffle=True)
     elif dataset == 'svhn':
         data_loader = DataLoader(
             datasets.SVHN('data/svhn', split=split, download=True, transform=transform),
