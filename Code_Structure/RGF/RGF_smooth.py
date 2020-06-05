@@ -7,22 +7,15 @@ from scipy.sparse import spdiags
 from scipy.sparse.linalg import spsolve
 
 
-def tsmooth(image, lambda_=0.01, sigma=3.0, sharpness=0.02, max_iter=4):
+def RollingGuidanceFilter(image, sigma_s=3, sigma_r=0.05, iteration=4):
     img = im2double(image)
-    # mask = np.zeros_like(img)  # inpainting task
-    x = img
-    sigma_iter = sigma
-    lambda_ = lambda_ / 2
-    dec = 2
+    res = np.zeros_like(img) 
 
-    for i in range(max_iter):
-        wx, wy = compute_texture_weights(x, sigma_iter, sharpness)
-        x = solve_linear_equation(img, wx, wy, lambda_)
-        sigma_iter /= dec
-        if sigma_iter < 0.5:
-            sigma_iter = 0.5
-
-    return x
+    for i in range(iteration):
+        for c in range(img.shape[2]):  # r, c, channel = img.shape
+            G = res[..., c]
+            res[..., c] = bilateralFilter(img[..., c], G, np.minimum(G.flatten('F')),np.maximum(G.flatten('F')),sigma_s, sigma_r)
+    return res
 
 def im2double(image):
     return image / 255
@@ -91,7 +84,6 @@ def solve_linear_equation(in_, wx, wy, lambda_):
     k = r * c
 
     # ‘F’ means to flatten in column-major (Fortran- style) order
-    # 列序优先
     dx = -lambda_ * wx.flatten('F')
     dy = -lambda_ * wy.flatten('F')
 
@@ -128,10 +120,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_dir', default='./input_dir', type=Path)
     parser.add_argument('--output_dir', '-o', default=None, type=Path)
-    parser.add_argument('--lambda_', default=0.01, type=float)     # Range (0, 0.05], 0.01 by default.
-    parser.add_argument('--sigma', default=3.0, type=float)        # Range (0, 6], 3 by defalut. 
-    parser.add_argument('--sharpness', default=0.02, type=float)   # Range (1e-3, 0.03], 0.02 by defalut. 
-    parser.add_argument('--max_iter', default=4, type=int)         # Number of itearations, 4 by default.
+    parser.add_argument('--sigma_s', default=3, type=float)           # 3 by default.
+    parser.add_argument('--sigma_r', default=0.05, type=float)        # 0.1 by defalut. 
+    parser.add_argument('--iteration', default=4, type=int)           # Number of itearations, 4 by default.
     args = parser.parse_args()
 
     # if args.output_img is None:
@@ -153,7 +144,7 @@ if __name__ == '__main__':
         print("img: ",img)
         image_in = os.path.join(args.input_dir, img)
         image = np.array(Image.open(image_in))
-        smoothed = tsmooth(image, args.lambda_, args.sigma, args.sharpness, args.max_iter)
+        smoothed = RollingGuidanceFilter(image, args.sigma_s, args.sigma_r, args.iteration)
         image_save = os.path.join(args.output_dir, img)
         Image.fromarray((smoothed * 256).astype('uint8')).save(str(image_save))
     
