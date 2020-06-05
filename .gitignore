@@ -7,9 +7,15 @@ __pycache__/
 *.so
 
 # Image
+<<<<<<< HEAD
 data/
 *.jpg
 *.png
+=======
+# data/
+# *.jpg
+# *.png
+>>>>>>> 2b0645048011f6ac05725799242e90ea5d3cdf9c
 
 # Distribution / packaging
 .Python
